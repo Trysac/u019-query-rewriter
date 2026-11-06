@@ -1,21 +1,45 @@
-"""Rewrite and expand retrieval queries with multi-query, HyDE and step-back prompts through the canonical LLM port, plus a no-model synonym expansion"""
+"""Rewrite and expand retrieval queries with multi-query, HyDE, step-back and synonyms."""
 
 from __future__ import annotations
 
-__all__ = ["__version__", "normalize"]
+from .errors import ErrorCode, RewriteError
+from .llm import (
+    FakeLLM,
+    LLMPort,
+    Message,
+    RecordedCall,
+    RecordedLLM,
+    RecordingExhaustedError,
+)
+from .prompts import PROMPTS
+from .rewrite import (
+    Rewrite,
+    RewriteResult,
+    Strategy,
+    expand_with_synonyms,
+    hyde,
+    multi_query,
+    step_back,
+)
+
+__all__ = [
+    "PROMPTS",
+    "ErrorCode",
+    "FakeLLM",
+    "LLMPort",
+    "Message",
+    "RecordedCall",
+    "RecordedLLM",
+    "RecordingExhaustedError",
+    "Rewrite",
+    "RewriteError",
+    "RewriteResult",
+    "Strategy",
+    "__version__",
+    "expand_with_synonyms",
+    "hyde",
+    "multi_query",
+    "step_back",
+]
 
 __version__ = "0.1.0"
-
-
-def normalize(value: str) -> str:
-    """Return ``value`` trimmed and lower-cased.
-
-    Placeholder API created by the template: replace it with the utility's real behavior.
-
-    Raises:
-        ValueError: if ``value`` is empty or only whitespace.
-    """
-    cleaned = value.strip()
-    if not cleaned:
-        raise ValueError("value must not be empty")
-    return cleaned.lower()
